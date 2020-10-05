@@ -38,6 +38,14 @@ export class ListStudentsComponent implements OnInit {
     });
   }
 
+  setGender(e) {
+    if (e.target.value === 'female') {
+      this.gender = 'female';
+    } else {
+      this.gender = 'male';
+    }
+  }
+
   editRow(student, index) {
     this.editMode[index] = true;
     this.gender = student.gender;
