@@ -1,0 +1,167 @@
+<div class="container">
+  <div class="my-3">
+    <span class="h3">Students' List</span>
+    <span>
+      <button
+        class="btn {{ colorSelectedDelete }}"
+        (click)="deleteSelected()"
+        style="float: right"
+        [disabled]="allDeleted"
+      >
+        Delete Selected
+      </button>
+    </span>
+    <span>
+      <button
+        class="btn {{ colorAllDelete }} mr-4"
+        (click)="deleteAll()"
+        style="float: right"
+      >
+        Delete All
+      </button>
+    </span>
+  </div>
+
+  <div *ngIf="allDeleted === false">
+    <div class="row">
+      <div
+        class="col-md-6 col-sm-12 my-3"
+        *ngFor="let student of students; let i = index"
+      >
+        <div class="card" style="width: 100%; height: 100%">
+          <div class="text-center">
+            <img
+              *ngIf="student.gender === 'female'"
+              src="{{ femaleImgUrl }}"
+              class="card-img-top"
+              alt="Female Avatar"
+            />
+            <img
+              *ngIf="student.gender === 'male'"
+              src="{{ maleImgUrl }}"
+              class="card-img-top"
+              alt="Male Avatar"
+            />
+          </div>
+          <div class="card-body">
+            <div class="card-title mb-4">
+              <span class="h5">Roll No.: {{ student.roll }}</span>
+              <span style="float: right">
+                <input type="checkbox" [(ngModel)]="student.isCompleted" />
+              </span>
+            </div>
+            <div class="card-text">
+              <p>
+                <span>Name:&nbsp;</span>
+                <span *ngIf="!editMode[i]" class="h5">{{ student.name }}</span>
+                <span *ngIf="editMode[i]"
+                  ><input
+                    type="text"
+                    [(ngModel)]="student.name"
+                    class="form-control"
+                    required
+                  />
+                </span>
+              </p>
+              <p>
+                <span>City:&nbsp;</span>
+                <span *ngIf="!editMode[i]" class="h6">{{ student.city }}</span>
+                <span *ngIf="editMode[i]"
+                  ><input
+                    type="text"
+                    [(ngModel)]="student.city"
+                    class="form-control"
+                    required
+                /></span>
+              </p>
+              <p>
+                <span>College:&nbsp;</span>
+                <span *ngIf="!editMode[i]" class="h6">{{
+                  student.college
+                }}</span>
+                <span *ngIf="editMode[i]"
+                  ><input
+                    type="text"
+                    [(ngModel)]="student.college"
+                    class="form-control"
+                    required
+                /></span>
+              </p>
+              <p>
+                <span>Qualification:&nbsp;</span>
+                <span *ngIf="!editMode[i]" class="h6">{{
+                  student.qualification
+                }}</span>
+                <span *ngIf="editMode[i]"
+                  ><input
+                    type="text"
+                    [(ngModel)]="student.qualification"
+                    class="form-control"
+                    required
+                /></span>
+              </p>
+              <div *ngIf="editMode[i]">
+                <div class="form-check">
+                  <label class="form-check-label mr-5" for="exampleRadios1">
+                    <input
+                      name="gender"
+                      class="form-check-input"
+                      type="radio"
+                      id="female"
+                      value="female"
+                      (change)="setGender($event)"
+                    /><i
+                      class="fas fa-female text-success"
+                      style="font-size: 26px"
+                    ></i
+                    >&nbsp;Female
+                  </label>
+                  <label class="form-check-label" for="exampleRadios2">
+                    <input
+                      name="gender"
+                      class="form-check-input"
+                      type="radio"
+                      id="male"
+                      value="male"
+                      (change)="setGender($event)"
+                    /><i
+                      class="fas fa-male text-success"
+                      style="font-size: 26px"
+                    ></i
+                    >&nbsp;Male
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <i
+                *ngIf="!editMode[i]"
+                class="fas fa-pen text-warning mr-4"
+                (click)="editRow(student, i)"
+                style="cursor: pointer"
+              ></i>
+              <i
+                *ngIf="editMode[i]"
+                class="fas fa-save text-info mr-4"
+                (click)="saveRow(student, i)"
+                style="cursor: pointer"
+              ></i>
+              <i
+                class="fas fa-trash text-danger"
+                (click)="delete(i)"
+                style="cursor: pointer"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-5" *ngIf="allDeleted === true">
+    <p>
+      <i class="fas fa-check-circle text-success" style="font-size: 66px"></i>
+    </p>
+    <p class="h5">All items have been deleted</p>
+  </div>
+</div>
